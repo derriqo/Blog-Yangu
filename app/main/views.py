@@ -1,8 +1,9 @@
 from flask import render_template
 from . import main
+from flask_login import login_required
 
 #Views 
-@main.route('/')
+@main.route('/',methods = ['GET','POST'])
 def index():
 
     '''
