@@ -60,3 +60,57 @@ def update_profile(uname):
         return redirect(url_for('.profile',uname=user.username))
 
     return render_template('profile/update.html',form =form)
+
+@main.route('/blog/new',methods = ['GET','POST'])
+@login_required
+def new_blog():
+
+    form =BlogForm()
+
+    if form.validate_on_submit():
+        blog = Blog(title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(blog)
+        db.session.commit()
+        flash('Your blog is ready!','success')
+        
+        return redirect(url_for('home'))
+
+    return render_template('blog.html',title = 'New Blog',form =form, legend='New Blog')
+
+
+@main.route("/blog/<int:blog_id>")
+def blog(blog_id):
+    blog = Blog.query.get_or_404(blog_id)
+    return render_template('blog.html', title=blog.title, blog=blog)
+
+
+@main.route("/blog/<int:blog_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_blog(blog_id):
+    blog = Blog.query.get_or_404(blog_id)
+    if blog.author != current_user:
+        abort(403)
+    form = BlogForm()
+    if form.validate_on_submit():
+        blog.title = form.title.data
+        blog.content = form.content.data
+        db.session.commit()
+        flash('Your blog has been updated!', 'success')
+        return redirect(url_for('blog', blog_id=blog.id))
+    elif request.method == 'GET':
+        form.title.data = blog.title
+        form.content.data = blog.content
+    return render_template('create_blog.html', title='Update Blog',
+                           form=form, legend='Update Blog')
+
+
+@main.route("/blog/<int:blog_id>/delete", methods=['Blog'])
+@login_required
+def delete_blog(blog_id):
+    blog = Blog.query.get_or_404(blog_id)
+    if blog.author != current_user:
+        abort(403)
+    db.session.delete(blog)
+    db.session.commit()
+    flash('Your blog has been deleted!', 'success')
+    return redirect(url_for('home'))
