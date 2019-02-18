@@ -4,10 +4,11 @@ class Config:
     '''
     General configuration parent class
     '''
-    QUOTES_API_BASE_URL =http://quotes.stormconsultancy.co.uk/random.json 
+    # QUOTES_API_BASE_URL = http://quotes.stormconsultancy.co.uk/quotes/1.json?callback=my_method
+    # http://quotes.stormconsultancy.co.uk/random.json
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://derrick:database@localhost/blog'
-
+    UPLOADED_PHOTOS_DEST ='app/static/photos'
 
 
 class ProdConfig(Config):
