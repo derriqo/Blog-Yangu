@@ -1,12 +1,14 @@
-<h1>Elvo App</h1>
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+{% block content %}
 <div class="container">
-    <div class="row">
-    <div class="col-md-2"> </div>
-    <div class="col-md-8">
-    
-    {{wtf.quick_form(registration_form)}}
-    
+    <div class="well">
+        <h1>-{{author}}</h1>
+        <p>''{{quote}}''</p>
+        <p>{{permalink}}</p>
+        
     </div>
-    <div class="col-md-2"></div>
-    </div>
-    </div>
+</div>
+{% endblock %}
+
