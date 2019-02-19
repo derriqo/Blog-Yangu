@@ -1,5 +1,5 @@
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="font-family: 'Kalam', cursive;font-size:40px">
             <div class="container-fluid">
              
               <div class="navbar-header">
@@ -9,7 +9,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Blog Yangu</a>
+                <a class="navbar-brand" href="/"> <strong>Blog Yangu</strong></a>
               </div>
           
               
@@ -20,7 +20,7 @@
                 <ul class="nav navbar-nav navbar-right">
                         {% if current_user.is_authenticated %}
 
-                        <li><a href="{{url_for('auth.logout')}}"><strong>Sign out</strong></a></li>
+        
                         <li><a href="{{url_for('main.profile',uname=current_user.username)}}"><strong>Profile</strong></a></li>
                         <li><a href="{{url_for('auth.logout')}}"><strong>Sign out</strong></a></li>
                         {% else %}

@@ -1,9 +1,10 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 from flask_login import login_required
-from ..models import User
+from ..models import User,Blog
 from .forms import UpdateProfile,BlogForm
 from urllib import request
+from .. import db, photos
 import json
 import threading
 
@@ -61,6 +62,18 @@ def update_profile(uname):
 
     return render_template('profile/update.html',form =form)
 
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@login_required
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',uname=uname))
+
+
 @main.route('/blog/new',methods = ['GET','POST'])
 @login_required
 def new_blog():
@@ -68,12 +81,12 @@ def new_blog():
     form =BlogForm()
 
     if form.validate_on_submit():
-        blog = Blog(title=form.title.data, content=form.content.data, author=current_user)
+        blog = Blog(title=form.title.data, content=form.content.data, user_id=current_user)
         db.session.add(blog)
         db.session.commit()
         flash('Your blog is ready!','success')
         
-        return redirect(url_for('home'))
+        return redirect(url_for('blog.html'))
 
     return render_template('create_blog.html',title = 'New Blog',form =form, legend='New Blog')
 
@@ -100,8 +113,7 @@ def update_blog(blog_id):
     elif request.method == 'GET':
         form.title.data = blog.title
         form.content.data = blog.content
-    return render_template('create_blog.html', title='Update Blog',
-                           form=form, legend='Update Blog')
+    return render_template('create_blog.html', title='Update Blog',form=form, legend='Update Blog')
 
 
 @main.route("/blog/<int:blog_id>/delete", methods=['Blog'])
