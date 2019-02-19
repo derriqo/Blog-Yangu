@@ -2,7 +2,7 @@ from flask import render_template,request,redirect,url_for,abort
 from . import main
 from flask_login import login_required
 from ..models import User
-from .forms import UpdateProfile
+from .forms import UpdateProfile,BlogForm
 from urllib import request
 import json
 import threading
@@ -75,7 +75,7 @@ def new_blog():
         
         return redirect(url_for('home'))
 
-    return render_template('blog.html',title = 'New Blog',form =form, legend='New Blog')
+    return render_template('create_blog.html',title = 'New Blog',form =form, legend='New Blog')
 
 
 @main.route("/blog/<int:blog_id>")

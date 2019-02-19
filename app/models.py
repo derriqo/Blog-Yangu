@@ -43,52 +43,62 @@ class Role(db.Model):
     def __repr__(self):
         return f'User {self.name}'
 
-class Comment(db.Model):
-    __tablename__ = 'comments'
-
-    id = db.Column(db.Integer,primary_key = True)
-    comment = db.Column(db.String(1000))
-    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    blog = db.Column(db.Integer,db.ForeignKey("blogs.id"))
-
-    def save_comment(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @classmethod
-    def get_comments(cls,blog):
-        comments = Comment.query.filter_by(blog_id=blog).all()
-        return comments
-
 class Blog(db.Model):
-    __tablename__ = 'blogs'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    id = db.Column(db.Integer,primary_key = True)
-    blog_title = db.Column(db.String)
-    blog_content = db.Column(db.String(1000))
-    category = db.Column(db.String)
-    posted = db.Column(db.DateTime,default=datetime.utcnow)
-    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    likes = db.Column(db.Integer)
-    dislikes = db.Column(db.Integer)
+    def __repr__(self):
+        return f"Blog('{self.title}', '{self.date_posted}')"
 
-    comments = db.relationship('Comment',backref =  'blog_id',lazy = "dynamic")
+# class Comment(db.Model):
+#     __tablename__ = 'comments'
 
-    def save_blog(self):
-        db.session.add(self)
-        db.session.commit()
+#     id = db.Column(db.Integer,primary_key = True)
+#     comment = db.Column(db.String(1000))
+#     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+#     blog = db.Column(db.Integer,db.ForeignKey("blogs.id"))
 
-    @classmethod
-    def get_blogs(cls,category):
-        blogs = Blog.query.filter_by(category=category).all()
-        return blogs
-    @classmethod
-    def count_blogs(cls,uname):
-        user = User.query.filter_by(username=uname).first()
-        blogs = Pitch.query.filter_by(user_id=user.id).all()
+#     def save_comment(self):
+#         db.session.add(self)
+#         db.session.commit()
 
-        blogs_count = 0
-        for blog in blogs:
-            blogs_count += 1
+#     @classmethod
+#     def get_comments(cls,blog):
+#         comments = Comment.query.filter_by(blog_id=blog).all()
+#         return comments
 
-        return blogs_count
+# class Blog(db.Model):
+#     __tablename__ = 'blogs'
+
+#     id = db.Column(db.Integer,primary_key = True)
+#     blog_title = db.Column(db.String)
+#     blog_content = db.Column(db.String(1000))
+#     category = db.Column(db.String)
+#     posted = db.Column(db.DateTime,default=datetime.utcnow)
+#     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+#     likes = db.Column(db.Integer)
+#     dislikes = db.Column(db.Integer)
+
+#     comments = db.relationship('Comment',backref =  'blog_id',lazy = "dynamic")
+
+#     def save_blog(self):
+#         db.session.add(self)
+#         db.session.commit()
+
+#     @classmethod
+#     def get_blogs(cls,category):
+#         blogs = Blog.query.filter_by(category=category).all()
+#         return blogs
+#     @classmethod
+#     def count_blogs(cls,uname):
+#         user = User.query.filter_by(username=uname).first()
+#         blogs = Pitch.query.filter_by(user_id=user.id).all()
+
+#         blogs_count = 0
+#         for blog in blogs:
+#             blogs_count += 1
+
+#         return blogs_count

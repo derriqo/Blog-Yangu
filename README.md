@@ -76,14 +76,12 @@ To run this project, please follow the following instructions.
 **User Story**
 As a user i want to be able to submit a one minute pitche and other users are able to vote on them and leave comments to give their feedback on them.
 
-| Behaviour | Output |
+| Input | Output |
 | :---------------- | :---------------: | 
-|  |   |
-|  |  |
-|  |  |
-|  | |
-|  |   |
-| |  |
+|User Logs in or signs up  | Login and User Form displays  |
+| --- |Quotes displays  |
+| User Clicks on the Navigation Bar | User is directed to the desired page |
+| User Posts a blog | Blog gets Posted|
 | Leave Application | Sign Out of application|
 
 

@@ -21,7 +21,7 @@ mail = Mail()
 
 def create_app(config_name):
 
-     app = Flask(__name__)
+     app = Flask(__name__, static_url_path='/static')
 
      app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
