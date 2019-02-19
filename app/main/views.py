@@ -91,10 +91,10 @@ def new_blog():
     return render_template('create_blog.html',title = 'New Blog',form =form, legend='New Blog')
 
 
-@main.route("/blog/<int:blog_id>")
-def blog(blog_id):
-    blog = Blog.query.get_or_404(blog_id)
-    return render_template('blog.html', title=blog.title, blog=blog)
+@main.route("/blogs")
+def blog():
+    blog = Blog.query.order_by(Blog.date_posted.desc())
+    return render_template('blog.html', blog=blog)
 
 
 @main.route("/blog/<int:blog_id>/update", methods=['GET', 'POST'])

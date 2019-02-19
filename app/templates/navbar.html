@@ -9,7 +9,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"> <strong>Blog Yangu</strong></a>
+                <a class="navbar-brand" href="/"> <strong style="font-size:40px">Blog Yangu</strong></a>
               </div>
           
               
@@ -20,7 +20,7 @@
                 <ul class="nav navbar-nav navbar-right">
                         {% if current_user.is_authenticated %}
 
-        
+                        <li><a href="{{url_for('main.blog')}}"><strong>Blog Posts</strong></a></li>
                         <li><a href="{{url_for('main.profile',uname=current_user.username)}}"><strong>Profile</strong></a></li>
                         <li><a href="{{url_for('auth.logout')}}"><strong>Sign out</strong></a></li>
                         {% else %}

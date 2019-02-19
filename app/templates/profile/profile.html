@@ -15,7 +15,7 @@
                 <p> {{user.bio}}</p>
 
               {%else%}
-                <p> {{user.username| capitalize}} has no bio </p>
+                <p> {{user.username| capitalize}} Please click below and give more information about yourself. </p>
               {% endif %}
 
               {% if user == current_user %}
